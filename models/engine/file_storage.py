@@ -14,10 +14,9 @@ class FileStorage:
             return self.__objects
         else:
             new_list = []
-            for k, v in self.__objects.items:
-                name = k.split(".")
-                if name[0] is cls.__name__:
-                    new_list.append()
+            for obj in self.__objects:
+                #if name[0] is cls.__name__:
+                new_list.append(self.__objects[obj])
             print(new_list)
             return new_list
 
