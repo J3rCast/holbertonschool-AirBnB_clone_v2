@@ -63,9 +63,8 @@ class FileStorage:
         Args:
             obj (optional): object to delete. Defaults to None.
         """
-        if obj:
-            key = type(obj).__name__ + "." + obj.id
-            if key in FileStorage.__objects:
-                del FileStorage.__objects[key]
-        else:
+        if not obj:
             return
+        key = type(obj).__name__ + "." + obj.id
+        if key in FileStorage.__objects:
+            del FileStorage.__objects[key]
