@@ -65,6 +65,6 @@ class FileStorage:
         """
         if not obj:
             return
-        key = type(obj).__name__ + "." + obj.id
-        if key in FileStorage.__objects:
+        if obj in FileStorage.__objects.values():
+            key = type(obj).__name__ + "." + obj.id
             del FileStorage.__objects[key]
