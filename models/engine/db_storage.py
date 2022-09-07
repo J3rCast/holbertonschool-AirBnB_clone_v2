@@ -1,11 +1,11 @@
 #!/usr/bin/python3
 """This module defines a class to manage storage"""
 from models.review import Review
-from models.user import User
 from models.city import City
 from models.amenity import Amenity
 from models.place import Place
 from models.state import State
+from models.user import User
 from sqlalchemy import create_engine, MetaData
 from sqlalchemy.orm import sessionmaker, Session, scoped_session
 from os import getenv

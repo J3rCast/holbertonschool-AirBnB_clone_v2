@@ -5,12 +5,12 @@ import sys
 import re
 from models.base_model import BaseModel
 from models.__init__ import storage
-from models.user import User
 from models.place import Place
 from models.state import State
 from models.city import City
 from models.amenity import Amenity
 from models.review import Review
+from models.user import User
 
 
 class HBNBCommand(cmd.Cmd):
@@ -116,6 +116,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, args):
         """ Create an object of any class"""
+        from os import getenv
         args_list = args.split()
 
         if not args:
@@ -127,8 +128,9 @@ class HBNBCommand(cmd.Cmd):
 
         new_dict = {}
         new_instance = HBNBCommand.classes[args_list[0]]()
-        storage.all().update({new_instance.to_dict()['__class__']
-            + '.' + new_instance.id: new_instance})
+        if getenv('HBNB_TYPE_STORAGE') != 'db':
+            storage.all().update({new_instance.to_dict()['__class__']
+                + '.' + new_instance.id: new_instance})
         for arg in range(1, len(args_list)):
             element = args_list[arg]
             kv = element.split("=")
@@ -137,9 +139,10 @@ class HBNBCommand(cmd.Cmd):
             new_dict.update({key: value})
 
         class_key = args_list[0] + '.' + new_instance.id
-        objects_dict = storage.all()[class_key]
-        objects_dict.__dict__.update(new_dict)
-        objects_dict.save
+        if getenv('HBNB_TYPE_STORAGE') != 'db':
+            objects_dict = storage.all()[class_key]
+            objects_dict.__dict__.update(new_dict)
+            objects_dict.save
         storage.save()
         print(new_instance.id)
         storage.save()
@@ -224,11 +227,11 @@ class HBNBCommand(cmd.Cmd):
             if args not in HBNBCommand.classes:
                 print("** class doesn't exist **")
                 return
-            for k, v in storage._FileStorage__objects.items():
+            for k, v in storage.all().items():
                 if k.split('.')[0] == args:
                     print_list.append(str(v))
         else:
-            for k, v in storage._FileStorage__objects.items():
+            for k, v in storage.all().items():
                 print_list.append(str(v))
 
         print(print_list)
