@@ -6,8 +6,8 @@ from models.city import City
 from models.amenity import Amenity
 from models.place import Place
 from models.state import State
-from mysqlalchemy import create_engine, MetaData, Session
-from mysqlalchemy.orm import sessionmaker, scoped_session
+from sqlalchemy import create_engine, MetaData
+from sqlalchemy.orm import sessionmaker, Session, scoped_session
 from os import getenv
 
 
@@ -38,7 +38,7 @@ class DBStorage():
             classes = [User, State, City, Amenity, Place, Review]
             for i in classes:
                 for obj in self.__session.query(i).all():
-                    new_dict.update({type(obj).__name__ + "." + obj.id}: obj)
+                    new_dict.update({type(obj).__name__ + "." + obj.id: obj})
         return new_dict
 
     def new(self, obj):
@@ -56,7 +56,8 @@ class DBStorage():
 
     def reload(self):
         """create tables based on database"""
-        Base.metadata.create_all(engine)
+        from models.base_model import Base
+        Base.metadata.create_all(self.__engine)
         session = sessionmaker(bind=self.__session, expire_on_commit=False)
         Session = scoped_session(session)
         self.__session = Session()
