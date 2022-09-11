@@ -4,25 +4,26 @@
 """
 
 
-
 from datetime import datetime
 from fabric.api import local, env, hosts, put, run
 
 
 env.hosts = ['54.227.49.160', '3.88.139.128']
+
+
 def deploy():
     """distributes an archive to your web servers"""
 
     env.user = 'ubuntu'
     env.disable_known_hosts = True
-    env.key_filename ="~/.ssh/id_rsa"
+    env.key_filename = "~/.ssh/id_rsa"
 
     path = do_pack()
-    if path == None:
+    if not path:
         return False
 
     ret = do_deploy(path)
-    
+
     return ret
 
 
@@ -45,7 +46,7 @@ def do_deploy(archive_path):
 
     env.user = 'ubuntu'
     env.disable_known_hosts = True
-    env.key_filename ="~/.ssh/id_rsa"
+    env.key_filename = "~/.ssh/id_rsa"
 
     file_ext = archive_path.split("/")[-1]
     file_name = file_ext.split(".")[0]
