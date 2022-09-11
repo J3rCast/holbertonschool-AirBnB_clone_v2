@@ -4,19 +4,19 @@
 """
 
 
-
 from datetime import datetime
 from fabric.api import local, env, hosts, put, run
 
 
 env.hosts = ['54.227.49.160', '3.88.139.128']
 
+
 def do_clean(number=0):
     """distributes an archive to your web servers"""
 
     env.user = 'ubuntu'
     env.disable_known_hosts = True
-    env.key_filename ="~/.ssh/id_rsa"
+    env.key_filename = "~/.ssh/id_rsa"
 
     if number == 0:
         number += 1
