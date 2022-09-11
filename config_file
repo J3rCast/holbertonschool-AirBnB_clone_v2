@@ -1,0 +1,30 @@
+server {
+        listen 80 default_server;
+        listen [::]:80 default_server;
+
+	root /var/www/example.com/html;
+
+        index index.html index.htm index.nginx-debian.html;
+
+        server_name _;
+
+	location /hbnb_static/ {
+		default_type "text/html";
+		alias /data/web_static/current/;
+	}
+
+	location ~ /redirect_me/$ {
+                rewrite ^/redirect_me/$ https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;
+        }
+
+	error_page 404 /error_page.html;
+        location = /error_page.html {
+                root /var/www/example.com/html;
+                internal;
+        }
+
+
+	location / {
+		add_header X-Served-By $hostname;
+	}
+}

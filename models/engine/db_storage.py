@@ -21,15 +21,19 @@ class DBStorage():
         password = getenv('HBNB_MYSQL_PWD')
         host = getenv('HBNB_MYSQL_HOST')
         database = getenv('HBNB_MYSQL_DB')
+
         self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'.format(
             user, password, host, database), pool_pre_ping=True)
+
         metadata_obj = MetaData()
+
         if getenv('HBNB_ENV') == 'test':
             metadata_obj.drop_all()
 
     def all(self, cls=None):
         """return a list of objects"""
         self.__session = Session(self.__engine)
+        print(self.__session.query(State).all())
         new_dict = {}
         if cls != None:
             for obj in self.__session.query(cls).all():

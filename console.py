@@ -143,7 +143,11 @@ class HBNBCommand(cmd.Cmd):
             objects_dict = storage.all()[class_key]
             objects_dict.__dict__.update(new_dict)
             objects_dict.save
+        if getenv('HBNB_TYPE_STORAGE') == 'db':
+            storage.new(new_instance)
+            storage.reload()
         storage.save()
+        print(storage.all())
         print(new_instance.id)
         storage.save()
 
