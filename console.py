@@ -128,9 +128,11 @@ class HBNBCommand(cmd.Cmd):
 
         new_dict = {}
         new_instance = HBNBCommand.classes[args_list[0]]()
+
         if getenv('HBNB_TYPE_STORAGE') != 'db':
             storage.all().update({new_instance.to_dict()['__class__']
                 + '.' + new_instance.id: new_instance})
+
         for arg in range(1, len(args_list)):
             element = args_list[arg]
             kv = element.split("=")
@@ -147,7 +149,7 @@ class HBNBCommand(cmd.Cmd):
             storage.new(new_instance)
             storage.reload()
         storage.save()
-        print(storage.all())
+        #print(storage.all())
         print(new_instance.id)
         storage.save()
 
