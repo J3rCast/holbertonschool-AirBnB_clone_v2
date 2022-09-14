@@ -39,7 +39,7 @@ class DBStorage():
             for obj in self.__session.query(cls).all():
                 new_dict.update({type(obj).__name__ + "." + obj.id: obj})
         else:
-            classes = [User, State, City, Amenity, Place, Review]
+            classes = [State, City, User, Amenity, Place, Review]
             for i in classes:
                 for obj in self.__session.query(i).all():
                     new_dict.update({type(obj).__name__ + "." + obj.id: obj})
