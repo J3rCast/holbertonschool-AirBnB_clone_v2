@@ -14,6 +14,7 @@ def index():
     """Display a web aplication."""
     return "Hello HBNB!"
 
+
 @app.route("/hbnb")
 def hbnb():
     """Display a web aplication."""

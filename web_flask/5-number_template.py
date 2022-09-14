@@ -15,16 +15,19 @@ def index():
     """Display a web aplication."""
     return "Hello HBNB!"
 
+
 @app.route("/hbnb")
 def hbnb():
     """Display a web aplication."""
     return "HBNB"
+
 
 @app.route("/c/<text>")
 def c_text(text):
     """Display a web aplication."""
     ret = "C {}".format(text)
     return ret.replace("_", " ")
+
 
 @app.route("/python", defaults={'text': "is cool"})
 @app.route("/python/<text>")
@@ -33,17 +36,19 @@ def python_text(text):
     ret = "Python {}".format(text)
     return ret.replace("_", " ")
 
+
 @app.route("/number/<int:n>")
 def number(n):
     """Display a web aplication."""
     ret = "{} is a number".format(n)
     return ret
 
+
 @app.route("/number_template/<int:n>")
 def number_template(n):
     """Display a web aplication."""
     return render_template('5-number.html',
-    number=n)
+                           number=n)
 
 
 if __name__ == '__main__':
